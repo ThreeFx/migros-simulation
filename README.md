@@ -11,3 +11,17 @@ How to collaborate:
 3. Make a PR.
 
 4. Profit!
+
+Classes:
+
+- Main application
+- MigrosQueue (erbt von LinkedList)
+- Cashier
+- SelfCheckout (erbt von Customer)
+- Customer
+- Migros
+- Ware (char)
+
+Ideas:
+
+- Interactive migros tour
