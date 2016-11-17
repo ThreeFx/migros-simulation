@@ -11,6 +11,7 @@ public class Tile {
     private Color backgroundColor;
     private Color stringColor;
 
+    // space between the individual tiles
     private int tilePadding = 10;
 
     private boolean isStatic = false;
@@ -34,11 +35,6 @@ public class Tile {
         this.positionX = positionX;
         this.positionY = positionY;
         this.isStatic = isStatic;
-    }
-
-    final public void printTile(){
-        String formatString = tilePadding>0?"%-"+tilePadding+"s":"%s";
-        System.out.print(String.format(formatString, Display.makeColor(""+displayChar, stringColor, backgroundColor) + " "));
     }
 
     /**
@@ -70,6 +66,11 @@ public class Tile {
         this.positionY = newY;
     }
 
-    final public boolean isStatic() {return isStatic;}
+    final public void printTile(){
+        String formatString = tilePadding>0?"%-"+tilePadding+"s":"%s";
+        System.out.print(String.format(formatString, Display.makeColor(""+displayChar, stringColor, backgroundColor) + " "));
+    }
+
+    final public boolean isStatic() { return isStatic; }
 
 }
