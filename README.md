@@ -1,6 +1,6 @@
 # Migros simulation
 
-A collaboration of ETH students.
+A collaboration of ETH students. (*we want cookies* 🍪)
 
 How to collaborate:
 
@@ -8,11 +8,42 @@ How to collaborate:
 
 2. Work and commit (on your own repo)
 
-3. Make a PR.
+3. Make a pull request
 
-4. Profit!
+Structure suggestion:
 
-Classes:
+- Main
+- ICharImage or IDrawable
+  - Person
+    - Customer
+    - Cashier
+  - Checkout (with Conveyer, Counter, Cashier)
+  - Item
+  - Floor
+- Image
+- ...
+
+Map:
+P: Person head (unicode char, e.g. 👤) or just 🚶  
+L: Person's lower part (unicode char, e.g. 👢,👘)  
+C: Conveyer belt (unicode char)  
+.: Floor tile (unicode char)  
+S: Shopping cart: � ?  
+I: Item (unicode, e.g. 🍪)  
+
+    ......P.......PPPPPPP...|  
+    ......L..CCCCCCCCIIIC...|  
+    ....................P...|  
+    .P.......CCCCCCCCCCCC...|  
+    .L...............PPPP...|  
+    .........CCCCCCCCCCCC...|  
+    ......................P.|  
+    .........CCCCCCCCCCCC.L.|  
+    ____________________ ...| <-- exit
+
+or scaled...
+
+Classes (old):
 
 - Main application
 - MigrosQueue (inherits from LinkedList)
