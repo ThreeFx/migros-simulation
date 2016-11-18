@@ -24,21 +24,21 @@ Structure suggestion:
 - ...
 
 Map:
-P: Person head (unicode char, e.g. 👤) or just 🚶
-L: Person's lower part (unicode char, e.g. 👢,👘)
-C: Conveyer belt (unicode char)
-.: Floor tile (unicode char)
-S: Shopping cart: � ?
-I: Item (unicode, e.g. 🍪)
+P: Person head (unicode char, e.g. 👤) or just 🚶  
+L: Person's lower part (unicode char, e.g. 👢,👘)  
+C: Conveyer belt (unicode char)  
+.: Floor tile (unicode char)  
+S: Shopping cart: � ?  
+I: Item (unicode, e.g. 🍪)  
 
-......P.......PPPPPPP...|
-......L..CCCCCCCCIIIC...|
-....................P...|
-.P.......CCCCCCCCCCCC...|
-.L...............PPPP...|
-.........CCCCCCCCCCCC...|
-......................P.|
-.........CCCCCCCCCCCC.L.|
+......P.......PPPPPPP...|  
+......L..CCCCCCCCIIIC...|  
+....................P...|  
+.P.......CCCCCCCCCCCC...|  
+.L...............PPPP...|  
+.........CCCCCCCCCCCC...|  
+......................P.|  
+.........CCCCCCCCCCCC.L.|  
 ____________________ ...| <-- exit
 
 or scaled...
