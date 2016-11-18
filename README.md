@@ -31,15 +31,15 @@ C: Conveyer belt (unicode char)
 S: Shopping cart: � ?  
 I: Item (unicode, e.g. 🍪)  
 
-......P.......PPPPPPP...|  
-......L..CCCCCCCCIIIC...|  
-....................P...|  
-.P.......CCCCCCCCCCCC...|  
-.L...............PPPP...|  
-.........CCCCCCCCCCCC...|  
-......................P.|  
-.........CCCCCCCCCCCC.L.|  
-____________________ ...| <-- exit
+    ......P.......PPPPPPP...|  
+    ......L..CCCCCCCCIIIC...|  
+    ....................P...|  
+    .P.......CCCCCCCCCCCC...|  
+    .L...............PPPP...|  
+    .........CCCCCCCCCCCC...|  
+    ......................P.|  
+    .........CCCCCCCCCCCC.L.|  
+    ____________________ ...| <-- exit
 
 or scaled...
 
