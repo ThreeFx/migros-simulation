@@ -15,9 +15,9 @@ How to collaborate:
 Classes:
 
 - Main application
-- MigrosQueue (erbt von LinkedList)
+- MigrosQueue (inherits from LinkedList)
 - Cashier
-- SelfCheckout (erbt von Customer)
+- SelfCheckout (inherits from Customer)
 - Customer
 - Migros
 - Ware (char)
