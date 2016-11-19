@@ -6,8 +6,12 @@ public class Main
     public static void main(String[] args)
     {
         AnsiConsole.systemInstall();
-        System.out.println( Ansi.ansi().eraseScreen().fg(Color.RED).a("Hello").fg(Color.GREEN).a(" World").reset() );
-        AnsiConsole.systemUninstall();
+        Ansi ansi = Ansi.ansi();
+        
+        // example from jansi
+        System.out.println(
+                ansi.eraseScreen().fg(Color.RED).a("Hello").fg(Color.GREEN).a(" World").reset()
+        );
         /*
         Map.initializeMap(20, 20);
         
@@ -15,5 +19,6 @@ public class Main
         
         animation.run();
         */
+        AnsiConsole.systemUninstall();
     }
 }

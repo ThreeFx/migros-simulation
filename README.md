@@ -17,10 +17,10 @@ Structure suggestion:
   - Person
     - Customer
     - Cashier
-  - Checkout (with Conveyer, Counter, Cashier)
+  - Checkout (with Conveyer, Counter, Cashier, Queue)
   - Item
   - Floor
-- Image
+- Image ("map")
 - ...
 
 Map:
@@ -41,7 +41,7 @@ I: Item (unicode, e.g. 🍪)
     .........CCCCCCCCCCCC.L.|  
     ____________________ ...| <-- exit
 
-or scaled...
+or scaled... maybe threepart person
 
 Classes (old):
 
