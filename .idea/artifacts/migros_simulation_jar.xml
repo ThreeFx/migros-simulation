@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="migros-simulation:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/migros_simulation_jar</output-path>
+    <root id="archive" name="migros-simulation.jar">
+      <element id="module-output" name="migros-simulation" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../jansi-master/jansi-master/classes/artifacts/jansi_project_jar/jansi-project.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

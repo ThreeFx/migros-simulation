@@ -12,7 +12,7 @@ public class Animation extends Thread {
             Display.displayMap(Map.asciiMap);
 
             try {
-                sleep(Math.max(100, 0));
+                sleep(Math.max(100, 0)); // ???
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
