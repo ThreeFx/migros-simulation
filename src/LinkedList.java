@@ -1,4 +1,6 @@
-class LinkedList<T> implements Queue<T> {
+package LinkedList;
+
+class LinkedList<T> implements Queue<T>, Stack<T> {
     Node<T> head;
     Node<T> tail;
     int size;
