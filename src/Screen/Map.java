@@ -2,6 +2,7 @@ package Screen;
 
 import Tiles.Checkout;
 import Tiles.Tile;
+//import Tiles.TileType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,8 +19,8 @@ public class Map {
 
     public static Tile[][] nextFrameMap;
 
-    private static int width;
     private static int height;
+    private static int width;
 
     /**
      * Initializes the map to a given width and height. The population of the map will be optimized later.
@@ -36,7 +37,7 @@ public class Map {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (j == 0 || i == 0 || j == width - 1 || i == height - 1) {
-                    asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, Color.BLUE, Color.NOBACKGROUND);
+                    asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, true, Color.BLUE, Color.NOBACKGROUND);
                 } else {
                     int rand = new Random().nextInt(1000);
                     //if (rand > 995)

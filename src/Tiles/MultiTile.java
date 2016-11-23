@@ -12,7 +12,6 @@ public class MultiTile {
     // dimensions of this tiles-construct
     private int width;
     private int height;
-
     public MultiTile(String filePath, int x, int y){
         char[][] displayCharacters = null;
 

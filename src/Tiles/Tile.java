@@ -3,9 +3,11 @@ package Tiles;
 import Screen.Color;
 import Screen.Display;
 import Screen.Map;
-import Tiles.TileType;
+
 
 import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Tile {
 
@@ -24,28 +26,30 @@ public class Tile {
     // whether the tile moves or not
     private boolean isStatic = false;
 
-	private TileType type;
+	//private TileType type;
+
+	List<Item> items;	
 
     public Tile(char displayChar, int positionX, int positionY){
-        this(displayChar, positionX, positionY, true, Color.BLUE, Color.NOBACKGROUND, TileType.EMPTY);
+        this(displayChar, positionX, positionY, true, Color.BLUE, Color.NOBACKGROUND);
     }
 
     public Tile(char displayChar, int positionX, int positionY, boolean isStatic){
-        this(displayChar, positionX, positionY, isStatic, Color.BLUE, Color.NOBACKGROUND, TileType.EMPTY);
+        this(displayChar, positionX, positionY, isStatic, Color.BLUE, Color.NOBACKGROUND);
     }
 
     public Tile(char displayChar, int positionX, int positionY, Color stringColor, Color backgroundColor){
-        this(displayChar, positionX, positionY, true, stringColor, backgroundColor, TileType.EMPTY);
+        this(displayChar, positionX, positionY, true, stringColor, backgroundColor);
     }
 
-    public Tile(char displayChar, int positionX, int positionY, boolean isStatic, Color stringColor, Color backgroundColor, TileType type){
+    public Tile(char displayChar, int positionX, int positionY, boolean isStatic, Color stringColor, Color backgroundColor){
         this.backgroundColor = backgroundColor;
         this.displayChar = displayChar;
         this.stringColor = stringColor;
         this.positionX = positionX;
         this.positionY = positionY;
         this.isStatic = isStatic;
-		this.type = type;	
+	    //this.type = type;
     }
 
     /**
@@ -60,7 +64,7 @@ public class Tile {
        	int y;
 
 
-		switch(type) {
+		/*switch(type) {
 			case ITEM:
 				
 			break;
@@ -75,19 +79,17 @@ public class Tile {
             if (Map.canPopulate(positionX + x, positionY + y, Map.nextFrameMap)) {
                	newX = newX + x;
                	newY = newY + y;
-               	movementPossible = true;
            	}
         	
 			default:        	
-				
+		*/
 
-       		Map.populateTile(this, Map.nextFrameMap, newX, newY);
-			this.positionX = newX;
-        	this.positionY = newY;
-        	
+        Map.populateTile(this, Map.nextFrameMap, newX, newY);
+        this.positionX = newX;
+        this.positionY = newY;
 
-		}
     }
+
 
     public void printTile(){
         String formatString = tilePadding>0?"%-"+tilePadding+"s":"%s";
