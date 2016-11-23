@@ -10,8 +10,8 @@ public class MultiTile {
     protected ArrayList<ArrayList<Tile>> tiles;
 
     // dimensions of this tiles-construct
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
 
     public MultiTile(String filePath, int x, int y){
         char[][] displayCharacters = null;
@@ -47,7 +47,7 @@ public class MultiTile {
      * reads out ASCII art from a file and stores each line of characters in an array, resulting in an 2-dimensional return array
      * @param String path of the file containing the artwork
      */
-    private char[][] getAsciiArt(String filePath) throws IOException {
+    protected char[][] getAsciiArt(String filePath) throws IOException {
         FileInputStream fstream = null;
         BufferedReader scanner = null;
 
