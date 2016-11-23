@@ -39,8 +39,8 @@ public class Map {
                     asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, Color.BLUE, Color.NOBACKGROUND);
                 } else {
                     int rand = new Random().nextInt(1000);
-                    if (rand > 995)
-                        new Checkout(j, 1);
+                    //if (rand > 995)
+                    //    new Checkout(j, 1);
                 }
             }
         }
