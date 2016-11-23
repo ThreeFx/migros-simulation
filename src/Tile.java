@@ -3,18 +3,20 @@ import java.util.Random;
 public class Tile {
 
     // the string that will be printed out to the map
-    private char displayChar;
+    protected char displayChar;
 
-    private int positionX;
-    private int positionY;
+    protected int positionX;
+    protected int positionY;
 
     private Color backgroundColor;
     private Color stringColor;
 
     // space between the individual tiles
-    private int tilePadding = 10;
+    private int tilePadding = 0;
 
+    // whether the tile moves or not
     private boolean isStatic = false;
+
 
     public Tile(char displayChar, int positionX, int positionY){
         this(displayChar, positionX, positionY, true, Color.BLUE, Color.NORMAL);
@@ -51,26 +53,29 @@ public class Tile {
 
         boolean movementPossible = false;
 
-        while(!movementPossible) {
-            x = new Random().nextInt(3)-1;
-            y = new Random().nextInt(3)-1;
-            if (Map.canPopulate(positionX + x, positionY + y)) {
+        while (!movementPossible) {
+            x = new Random().nextInt(3) - 1;
+            y = new Random().nextInt(3) - 1;
+
+            if (Map.canPopulate(positionX + x, positionY + y, Map.nextFrameMap)) {
                 newX = newX + x;
                 newY = newY + y;
                 movementPossible = true;
             }
         }
 
-        Map.populateTile(this, newX, newY);
+        Map.populateTile(this, Map.nextFrameMap, newX, newY);
         this.positionX = newX;
         this.positionY = newY;
     }
 
-    final public void printTile(){
+    public void printTile(){
         String formatString = tilePadding>0?"%-"+tilePadding+"s":"%s";
-        System.out.print(String.format(formatString, Display.makeColor(""+displayChar, stringColor, backgroundColor) + " "));
+        System.out.print(String.format(formatString, Display.makeColor(""+displayChar, stringColor, backgroundColor) + ""));
     }
 
     final public boolean isStatic() { return isStatic; }
+
+    final public char getDisplayCharacter() { return displayChar; }
 
 }

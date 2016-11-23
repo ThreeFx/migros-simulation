@@ -1,12 +1,12 @@
 public class Main {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		Map.initializeMap(20, 20);
+        Map.initializeMap(100, 30);
 
-		Animation animation = new Animation();
+        Animation animation = new Animation();
 
-		animation.run();
+        animation.run();
 
     }
 }
