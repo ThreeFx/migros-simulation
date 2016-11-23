@@ -23,7 +23,6 @@ public class Tile {
     // whether the tile moves or not
     private boolean isStatic = false;
 
-
     public Tile(char displayChar, int positionX, int positionY){
         this(displayChar, positionX, positionY, true, Color.BLUE, Color.NOBACKGROUND);
     }
