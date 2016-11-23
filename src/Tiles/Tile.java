@@ -1,3 +1,9 @@
+package Tiles;
+
+import Screen.Color;
+import Screen.Display;
+import Screen.Map;
+
 import java.util.Random;
 
 public class Tile {
@@ -19,11 +25,11 @@ public class Tile {
 
 
     public Tile(char displayChar, int positionX, int positionY){
-        this(displayChar, positionX, positionY, true, Color.BLUE, Color.NORMAL);
+        this(displayChar, positionX, positionY, true, Color.BLUE, Color.NOBACKGROUND);
     }
 
     public Tile(char displayChar, int positionX, int positionY, boolean isStatic){
-        this(displayChar, positionX, positionY, isStatic, Color.BLUE, Color.NORMAL);
+        this(displayChar, positionX, positionY, isStatic, Color.BLUE, Color.NOBACKGROUND);
     }
 
     public Tile(char displayChar, int positionX, int positionY, Color stringColor, Color backgroundColor){

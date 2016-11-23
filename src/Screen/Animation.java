@@ -1,3 +1,5 @@
+package Screen;
+
 public class Animation extends Thread {
 
     public Animation(){}

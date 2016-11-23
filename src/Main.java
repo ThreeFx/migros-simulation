@@ -1,3 +1,6 @@
+import Screen.Animation;
+import Screen.Map;
+
 public class Main {
 
     public static void main(String[] args) {

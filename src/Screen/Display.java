@@ -1,3 +1,7 @@
+package Screen;
+
+import Tiles.Tile;
+
 public class Display {
 
     final public static void displayMap(Tile[][] asciiMap) {
@@ -36,9 +40,10 @@ public class Display {
                 return "\u001B["+state+"6m";
             case WHITE:
                 return "\u001B["+state+"7m";
-            case NORMAL:
-            default:
+            case RESET:
                 return "\u001B[0m";
+            default:
+                return "";
         }
     }
 
@@ -50,6 +55,6 @@ public class Display {
         //5 = magenta, 6 = cyan, 7 = white
         //This will return the string with colored syntax
 
-        return colorToString(foregroundColor, 3) + colorToString(backgroundColor, 4) + in + colorToString(Color.NORMAL, 0);
+        return colorToString(foregroundColor, 3) + colorToString(backgroundColor, 4) + in + colorToString(Color.RESET, 0);
     }
 }

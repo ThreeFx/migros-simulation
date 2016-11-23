@@ -1,3 +1,8 @@
+package Screen;
+
+import Tiles.Checkout;
+import Tiles.Tile;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -31,7 +36,7 @@ public class Map {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (j == 0 || i == 0 || j == width - 1 || i == height - 1) {
-                    asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, Color.BLUE, Color.NORMAL);
+                    asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, Color.BLUE, Color.NOBACKGROUND);
                 } else {
                     int rand = new Random().nextInt(1000);
                     if (rand > 995)
@@ -41,7 +46,7 @@ public class Map {
         }
 
         for (int i = 0; i < 6; i++) {
-            asciiMap[height / (i + 2)][width / (i + 2)] = new Tile('@', width / (i + 2), height / (i + 2), false, Color.YELLOW, Color.NORMAL);
+            asciiMap[height / (i + 2)][width / (i + 2)] = new Tile('@', width / (i + 2), height / (i + 2), false, Color.YELLOW, Color.NOBACKGROUND);
         }
 
     }
