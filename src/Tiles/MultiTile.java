@@ -10,6 +10,7 @@ public class MultiTile {
     protected ArrayList<ArrayList<Tile>> tiles;
 
     // dimensions of this tiles-construct
+
     protected int width;
     protected int height;
 
