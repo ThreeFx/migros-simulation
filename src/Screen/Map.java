@@ -3,6 +3,7 @@ package Screen;
 import Tiles.Checkout;
 import Tiles.Tile;
 import Tiles.ItemSpawner;
+import Tiles.Person;
 //import Tiles.TileType;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Map {
     // layer where all static objects reside
     public static Tile[][] staticLayer;
     // layer where all movable objects reside
-    public static Tile[][] movableLayer;
+    //public static Tile[][] movableLayer;
 
     public static Tile[][] nextFrameMap;
 
@@ -58,13 +59,13 @@ public class Map {
                 } else {
                     char cChar = mapperoni[i][j];
 
-                    if(cChar == '◷') {
+                    if (cChar == '◷') {
                         asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.GREEN, Color.NOBACKGROUND);
-                    } else if(cChar == '◸') {
+                    } else if (cChar == '◸') {
                         asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.RED, Color.NOBACKGROUND);
-                    } else if(cChar == '◐') {
+                    } else if (cChar == '◐') {
                         asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.YELLOW, Color.NOBACKGROUND);
-                    } else if (cChar != ' '){
+                    } else if (cChar != ' ') {
                         asciiMap[i][j] = new Tile(cChar, j, i, true, Color.BLUE, Color.NOBACKGROUND);
                     }
                     //int rand = new Random().nextInt(1000);
@@ -73,10 +74,15 @@ public class Map {
                 }
             }
         }
-
-        for (int i = 0; i < 6; i++) {
-            asciiMap[height / (i + 2)][width / (i + 2)] = new Tile('@', width / (i + 2), height / (i + 2), false, Color.YELLOW, Color.NOBACKGROUND);
+        staticLayer = new Tile[asciiMap.length][asciiMap[0].length];
+        for(int i = 0; i < asciiMap.length; ++i) {
+            for(int j = 0; j < asciiMap[i].length; ++j) {
+                if(asciiMap[i][j] instanceof Person) staticLayer[i][j] = new Person((Person)asciiMap[i][j]);
+                else if(asciiMap[i][j] instanceof ItemSpawner) staticLayer[i][j] = new ItemSpawner((ItemSpawner)asciiMap[i][j]);
+                else if(asciiMap[i][j] instanceof Tile) staticLayer[i][j] = new Tile((Tile)asciiMap[i][j]);
+            }
         }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,14 +117,26 @@ public class Map {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                // if there is no tile at this position we don't have to update anything
-                if (asciiMap[i][j] == null) continue;
-                // if the tile is is not movable, we can copy it without doing any calculations
-                if (asciiMap[i][j].isStatic())
-                    nextFrameMap[i][j] = asciiMap[i][j];
-                    // if it's movable we have to wait until all static objects have been copied
-                else
+                if(asciiMap[i][j] != null && asciiMap[i][j].isStatic() == false)
                     toProcess.add(asciiMap[i][j]);
+            }
+        }
+        nextFrameMap = new Tile[staticLayer.length][staticLayer[0].length];
+        for(int i = 0; i < staticLayer.length; ++i) {
+            for(int j = 0; j < staticLayer[i].length; ++j) {
+                if(asciiMap[i][j] instanceof Person) nextFrameMap[i][j] = new Person((Person)staticLayer[i][j]);
+                else if(asciiMap[i][j] instanceof ItemSpawner) nextFrameMap[i][j] = new ItemSpawner((ItemSpawner)staticLayer[i][j]);
+                else if (asciiMap[i][j] instanceof Tile) nextFrameMap[i][j] = new Tile((Tile)staticLayer[i][j]);
+            }
+        }
+
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                //if(asciiMap[i][j] != null && asciiMap[i][j].isStatic() && asciiMap[i][j].getDisplayCharacter() == 'Q') {
+                //    Random r = new Random();
+                //    if(r.nextInt(100) == 42) asciiMap[i][j] = new Person('@', i, j, true, Color.YELLOW, Color.NOBACKGROUND);
+                //}
             }
         }
 

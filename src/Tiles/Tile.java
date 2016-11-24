@@ -12,18 +12,22 @@ public class Tile {
     protected int positionX;
     protected int positionY;
 
-    private Color backgroundColor;
-    private Color stringColor;
+    protected Color backgroundColor;
+    protected Color stringColor;
 
     // space between the individual tiles
-    private int tilePadding = 0;
+    protected int tilePadding = 0;
 
     // whether the tile moves or not
-    private boolean isStatic = false;
+    protected boolean isStatic = false;
 
     public Tile() {
 
     }
+    public Tile(Tile a) {
+        this(a.displayChar, a.positionX, a.positionY, a.isStatic, a.stringColor, a.backgroundColor);
+    }
+
     public Tile(char displayChar, int positionX, int positionY) {
         this(displayChar, positionX, positionY,true,Color.NOBACKGROUND, Color.NOBACKGROUND);
     }
