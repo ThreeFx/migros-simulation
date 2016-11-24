@@ -3,8 +3,9 @@ package Tiles;
 import Screen.Map;
 
 import java.io.*;
+import java.util.ArrayList;
 
-public abstract class MultiTile {
+public class MultiTile implements IPrintable {
     protected Tile[][] tiles;
 
     // dimensions of this tiles-construct
@@ -14,42 +15,28 @@ public abstract class MultiTile {
     protected int x;
     protected int y;
 
-
-    /**
-     * reads out ASCII art from a file and stores each line of characters in an array, resulting in an 2-dimensional return array
-     */
-    public abstract char[][] getAsciiArt() throws IOException;
-
-    public abstract void update();
-
-    /**
-     * @return true if the whole construct can be printed out at position x and y and false otherwise
-     */
-    final public boolean canPrintAt(Tile[][] map){
-        // check if any of the required spaces are already in use and return false if so
-        for (int i = 0; i < tiles.length; i++){
-            for (int j = 0; j < tiles[i].length; j++){
-                if (!Map.canPopulate(x+j, y+i, map) || y+i >= map.length-1 || x+j >= map[0].length-1) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+    public MultiTile() {
     }
 
-    /**
-     * Inserts the whole construct to a map
-     * @param x horizontal coordinate at which the construct should be inserted
-     * @param y vertical coordinate at which the construct should be inserted
-     * @param map a map in which the tiles should be saved
-     */
-    final public void insertAt(Tile[][] map){
-        for(int i = 0; i < tiles.length; i++){
-            for(int j = 0; j < tiles[i].length; j++){
-                Map.populateTile(tiles[i][j], map, x+j, y+i);
+    public void print() {
+        System.out.println(tiles[0][0].getPlaceholder());
+    }
+
+    public void update() {
+        // Do nothing by default
+        // Draw same map again on next tile.
+        for (int i = y; i < y + height; i++) {
+            for (int j = x; j < x + width; j++) {
+                Map.populateTile(tiles[i - y][j - x], Map.nextFrameMap, i, j);
             }
         }
     }
 
+    public boolean isStatic() {
+        return false;
+    }
+
+    public char getPlaceholder() {
+        return 'M';
+    }
 }

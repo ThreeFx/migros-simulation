@@ -5,15 +5,15 @@ import java.io.*;
 
 import LLinkedList.LLinkedList;
 
-class MigrosQueue extends MultiTile {
+public class MigrosQueue extends MultiTile {
     // People
     private LLinkedList<Person> queue;
     private double prob;
 
-    public MigrosQueue(String filePath, int x, int y, double prob) {
-        super();
+    public MigrosQueue(double prob) {
         this.queue = new LLinkedList();
         this.prob  = prob;
+        this.tiles = getArt();
     }
 
     public int getSize() {
@@ -31,6 +31,7 @@ class MigrosQueue extends MultiTile {
         }
     }
 
+    @Override
     public void update() {
         if (Math.random() <= prob) {
             // beep
@@ -40,36 +41,46 @@ class MigrosQueue extends MultiTile {
                 this.queue.dequeue();
             }
         }
+        this.tiles = getArt();
+        super.update();
     }
 
-    public char[][] getAsciiArt() throws IOException {
-        // Fuck error handling
-        FileInputStream fstream = new FileInputStream(System.getProperty("user.dir") +  "/Art/MigrosQueue.ASCIIART");
-        BufferedReader scanner = new BufferedReader(new InputStreamReader(fstream));
+    public Tile[][] getArt() {
+        ArrayList<Tile[]> til = new ArrayList<>();
 
-        ArrayList<char[]> chars = new ArrayList<>();
-        String line;
-
-        int addToHeight = 0;
+        height = 0;
         for (Person p : queue) {
             ArrayList<Item> items = p.getItems();
-            int len = Math.max(3, items.size());
-            p.setPosition(x + addToHeight, y + 4);
+            int len = Math.max(4, items.size() + 1);
+            p.setPosition(x + height, y + 4);
 
             for (int i = 0; i < len; i++) {
                 char[] item = ("  |" + (i < items.size() ? items.get(i).getRepresentation() : " ") + "|").toCharArray();
-                chars.add(item);
+                Tile[] t = new Tile[item.length];
+                for (int j = 0; j < t.length; j++)
+                    t[i] = new Tile(item[i], i + y, x + height);
+                til.add(t);
+                height++;
             }
-            addToHeight += len;
         }
 
-        while ((line = scanner.readLine()) != null) {
-            chars.add(line.toCharArray());
+        char[] line;
+        String[] s = { "__| |", " o| |", "  | |", "   ― " };
+        for (String ss : s) {
+            char[] c = ss.toCharArray();
+            Tile[] t = new Tile[c.length];
+            for (int i = 0; i < c.length; i++) {
+                t[i] = new Tile(c[i], y + i, x + height);
+            }
+            til.add(t);
+            height++;
         }
 
-        this.height = 4 + addToHeight;
         this.width  = 6;
 
-        return (char[][])(chars.toArray());
+        Tile[][] res = (Tile[][])(til.toArray());
+        System.out.println(res.length);
+        System.out.println(res[0].length);
+        return res;
     }
 }
