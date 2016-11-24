@@ -5,6 +5,7 @@ import Screen.Map;
 import java.io.*;
 import java.util.ArrayList;
 
+/*
 public class MultiTile implements IPrintable {
     protected Tile[][] tiles;
 
@@ -21,14 +22,14 @@ public class MultiTile implements IPrintable {
 
     /**
      * reads out ASCII art from a file and stores each line of characters in an array, resulting in an 2-dimensional return array
-     */
+
     public abstract char[][] getAsciiArt() throws IOException;
 
     public abstract void update();
 
     /**
      * @return true if the whole construct can be printed out at position x and y and false otherwise
-     */
+
     final public boolean canPrintAt(Tile[][] map){
         // check if any of the required spaces are already in use and return false if so
         for (int i = 0; i < tiles.length; i++){
@@ -47,7 +48,7 @@ public class MultiTile implements IPrintable {
      * @param x horizontal coordinate at which the construct should be inserted
      * @param y vertical coordinate at which the construct should be inserted
      * @param map a map in which the tiles should be saved
-     */
+
     final public void insertAt(Tile[][] map){
         for(int i = 0; i < tiles.length; i++){
             for(int j = 0; j < tiles[i].length; j++){
@@ -55,5 +56,5 @@ public class MultiTile implements IPrintable {
             }
         }
     }
-
 }
+*/

@@ -5,6 +5,7 @@ import java.io.*;
 
 import LLinkedList.LLinkedList;
 
+/*
 class MigrosQueue extends MultiTile {
     // People
     private LLinkedList<Person> queue;
@@ -73,3 +74,4 @@ class MigrosQueue extends MultiTile {
         return (char[][])(chars.toArray());
     }
 }
+*/
