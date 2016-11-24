@@ -5,8 +5,8 @@ import Screen.Map;
 import java.io.*;
 import java.util.ArrayList;
 
-public class MultiTile {
-    protected ArrayList<ArrayList<Tile>> tiles;
+public class MultiTile implements IPrintable {
+    protected Tile[][] tiles;
 
     // dimensions of this tiles-construct
     protected int width;
@@ -15,87 +15,25 @@ public class MultiTile {
     protected int x;
     protected int y;
 
-    public MultiTile(String filePath, int x, int y){
-        char[][] displayCharacters = null;
-        this.x = x;
-        this.y = y;
-
-        try {
-            displayCharacters = getAsciiArt(filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            displayCharacters = new char[][]{{'⚠'}};
-        }
-
-        tiles = new ArrayList<ArrayList<Tile>>();
-        // find the dimensions of this construct
-        height = displayCharacters.length;
-
-        // initializes the tiles array with tiles made of the characters passed to the constructor
-        for(int i=0;i<displayCharacters.length;i++){
-            tiles.add(new ArrayList<Tile>());
-            width = Math.max(displayCharacters[i].length, width);
-
-            for(int j=0;j<displayCharacters[i].length;j++){
-                tiles.get(i).add(new Tile(displayCharacters[i][j], x+j, y+i));
-            }
-        }
-
-        // only print the construct to the map if it fits
-        if(canPrintAt(x, y, Map.asciiMap)){
-            insertAt(x, y, Map.asciiMap);
-        }
+    public MultiTile() {
+        boolean isStatic = false;
     }
 
     /**
      * reads out ASCII art from a file and stores each line of characters in an array, resulting in an 2-dimensional return array
-     * @param String path of the file containing the artwork
      */
-    public char[][] getAsciiArt(String filePath) throws IOException {
-        FileInputStream fstream = null;
-        BufferedReader scanner = null;
+    public abstract char[][] getAsciiArt() throws IOException;
 
-        try {
-            fstream = new FileInputStream(System.getProperty("user.dir") +  "/" + filePath);
-            scanner = new BufferedReader(new InputStreamReader(fstream));
-        } catch (FileNotFoundException er) {
-            try {
-                fstream = new FileInputStream(System.getProperty("user.dir") +  "/src/" + filePath);
-                scanner = new BufferedReader(new InputStreamReader(fstream));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return new char[][]{{'⚠'}};
-            }
-        }
-
-
-        ArrayList<char[]> characters = new ArrayList<char[]>();
-        String line = null;
-
-        // copy each character to the array
-        while((line = scanner.readLine()) != null) {
-
-            char[] charLine = line.toCharArray();
-            characters.add(charLine);
-        }
-
-        char[][] output = new char[characters.size()][characters.get(0).length];
-        for(int i = 0; i < characters.size(); ++i) {
-            for(int j = 0; j < characters.get(i).length; ++j) {
-                output[i][j] = characters.get(i)[j];
-            }
-        }
-        return output;
-    }
+    public abstract void update();
 
     /**
      * @return true if the whole construct can be printed out at position x and y and false otherwise
      */
     final public boolean canPrintAt(Tile[][] map){
-        // check if a9ny of the required spaces are already in use and return false if so
-        for(int i=0;i<tiles.size();i++){
-            for(int j=0;j<tiles.get(i).size();j++){
-                if(!Map.canPopulate(x+j, y+i, map) || y+i==map.length-1 || x+j==map[0].length-1){
+        // check if any of the required spaces are already in use and return false if so
+        for (int i = 0; i < tiles.length; i++){
+            for (int j = 0; j < tiles[i].length; j++){
+                if (!Map.canPopulate(x+j, y+i, map) || y+i >= map.length-1 || x+j >= map[0].length-1) {
                     return false;
                 }
             }
@@ -111,9 +49,9 @@ public class MultiTile {
      * @param map a map in which the tiles should be saved
      */
     final public void insertAt(Tile[][] map){
-        for(int i=0;i<tiles.size();i++){
-            for(int j=0;j<tiles.get(i).size();j++){
-                Map.populateTile(tiles.get(i).get(j), map, x+j, y+i);
+        for(int i = 0; i < tiles.length; i++){
+            for(int j = 0; j < tiles[i].length; j++){
+                Map.populateTile(tiles[i][j], map, x+j, y+i);
             }
         }
     }

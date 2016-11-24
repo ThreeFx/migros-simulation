@@ -1,10 +1,11 @@
 package Screen;
 
+import Tiles.IPrintable;
 import Tiles.Tile;
 
 public class Display {
 
-    final public static void displayMap(Tile[][] asciiMap) {
+    final public static void displayMap(IPrintable[][] asciiMap) {
         //Why use strings? Well we can use colors then!
         //Note: This is fairly slow, because sysout tends not to buffer.
         int numberOfBackspaces = 0xcafebabe; //magic
@@ -12,9 +13,9 @@ public class Display {
         for(int i = 0; i < asciiMap.length; ++i) {
             for(int j = 0; j < asciiMap[i].length; ++j) {
                 if(asciiMap[i][j] != null)
-                    asciiMap[i][j].printTile();
+                    asciiMap[i][j].print();
                 else
-                    new Tile(' ', j, i).printTile();
+                    new Tile(' ', j, i).print();
             }
             System.out.print('\n'); //new line character
         }

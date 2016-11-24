@@ -2,6 +2,7 @@ package Screen;
 
 import Tiles.Checkout;
 import Tiles.Tile;
+import Tiles.IPrintable;
 import Tiles.ItemSpawner;
 import Tiles.Person;
 //import Tiles.TileType;
@@ -13,14 +14,14 @@ import java.util.TreeSet;
 
 public class Map {
 
-    public static Tile[][] asciiMap;
+    public static IPrintable[][] asciiMap;
 
     // layer where all static objects reside
-    public static Tile[][] staticLayer;
+    public static IPrintable[][] staticLayer;
     // layer where all movable objects reside
     //public static Tile[][] movableLayer;
 
-    public static Tile[][] nextFrameMap;
+    public static IPrintable[][] nextFrameMap;
 
     private static int height;
     private static int width;
@@ -42,7 +43,7 @@ public class Map {
             Map.width = mapperoni[0].length;
 
             System.out.println(width + " " + height);
-        asciiMap = new Tile[height][width];
+        asciiMap = new IPrintable[height][width];
 
         itemList = new TreeSet<Character>();
         itemList.add('◷');
@@ -74,7 +75,7 @@ public class Map {
                 }
             }
         }
-        staticLayer = new Tile[asciiMap.length][asciiMap[0].length];
+        staticLayer = new IPrintable[asciiMap.length][asciiMap[0].length];
         for(int i = 0; i < asciiMap.length; ++i) {
             for(int j = 0; j < asciiMap[i].length; ++j) {
                 if(asciiMap[i][j] instanceof Person) staticLayer[i][j] = new Person((Person)asciiMap[i][j]);
@@ -95,7 +96,7 @@ public class Map {
      * @param y Coordinate Y
      * @return true if the position is free, false otherwise
      */
-    public static boolean canPopulate(int x, int y, Tile[][] map) {
+    public static boolean canPopulate(int x, int y, IPrintable[][] map) {
         if (x < 0 || x >= width || y < 0 || y >= height || map[y][x] != null)
             return false;
         else {
@@ -103,15 +104,15 @@ public class Map {
         }
     }
 
-    public static void populateTile(Tile tile, Tile[][] map, int x, int y) {
-        if (tile.getDisplayCharacter() == ' ') return;
+    public static void populateTile(Tile tile, IPrintable[][] map, int x, int y) {
+        if (tile.getPlaceholder() == ' ') return;
         if (x < 0 || x >= width || y < 0 || y >= height) return;
 
         map[y][x] = tile;
     }
 
     public static void getNextFrame() {
-        ArrayList<Tile> toProcess = new ArrayList<Tile>();
+        ArrayList<IPrintable> toProcess = new ArrayList<IPrintable>();
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -119,7 +120,7 @@ public class Map {
                     toProcess.add(asciiMap[i][j]);
             }
         }
-        nextFrameMap = new Tile[staticLayer.length][staticLayer[0].length];
+        nextFrameMap = new IPrintable[staticLayer.length][staticLayer[0].length];
         for(int i = 0; i < staticLayer.length; ++i) {
             for(int j = 0; j < staticLayer[i].length; ++j) {
                 /*
@@ -133,7 +134,7 @@ public class Map {
                 if(asciiMap[i][j] instanceof Person) {}//nextFrameMap[i][j] = asciiMap[i][j];
                 else if(asciiMap[i][j] instanceof ItemSpawner) nextFrameMap[i][j] = new ItemSpawner((ItemSpawner)staticLayer[i][j]);
                 else if (asciiMap[i][j] instanceof Tile) {
-                    if(asciiMap[i][j].isStatic() && asciiMap[i][j].getDisplayCharacter() == 'Q' && (new Random()).nextInt(100)==42) {
+                    if(asciiMap[i][j].isStatic() && asciiMap[i][j].getPlaceholder() == 'Q' && (new Random()).nextInt(100)==42) {
                         nextFrameMap[i][j] = new Person('@', i, j, false, Color.YELLOW, Color.NOBACKGROUND);
                     }
                     else
@@ -152,7 +153,7 @@ public class Map {
 
         // process all remaining tiles that are not static
         for (int i = 0; i < toProcess.size(); i++) {
-            toProcess.get(i).getNextFrame();
+            toProcess.get(i).update();
         }
 
         asciiMap = nextFrameMap;

@@ -4,7 +4,7 @@ import Screen.Color;
 import Screen.Display;
 import Screen.Map;
 
-public class Tile {
+public class Tile implements IPrintable {
 
     // the string that will be printed out to the map
     protected char displayChar;
@@ -40,6 +40,23 @@ public class Tile {
         this.isStatic = isStatic;
 	    //this.type = type;
 
+    }
+
+    // IPrintable implementation
+    public void print() {
+        this.printTile();
+    }
+
+    public void update() {
+        this.getNextFrame();
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public char getPlaceholder() {
+        return this.displayChar;
     }
 
     /**
@@ -85,8 +102,6 @@ public class Tile {
         System.out.print(String.format(formatString, Display.makeColor(""+displayChar, stringColor, backgroundColor) + ""));
     }
 
-    final public boolean isStatic() { return isStatic; }
-
     final public char getDisplayCharacter() { return displayChar; }
 
     final public boolean setPosition(int X, int Y) {
@@ -95,3 +110,4 @@ public class Tile {
         return true;
     }
 }
+

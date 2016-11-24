@@ -42,7 +42,7 @@ class MigrosQueue extends MultiTile {
         }
     }
 
-    public char[][] getAsciiArt(String filePath) throws IOException {
+    public char[][] getAsciiArt() throws IOException {
         // Fuck error handling
         FileInputStream fstream = new FileInputStream(System.getProperty("user.dir") +  "/Art/MigrosQueue.ASCIIART");
         BufferedReader scanner = new BufferedReader(new InputStreamReader(fstream));
@@ -55,12 +55,12 @@ class MigrosQueue extends MultiTile {
             ArrayList<Item> items = p.getItems();
             int len = Math.max(3, items.size());
             p.setPosition(x + addToHeight, y + 4);
-            char[] item;
+
             for (int i = 0; i < len; i++) {
-                item = (" |" + (i < items.size() ? items.get(i).getRepresentation() : " ") + "|").toCharArray();
+                char[] item = ("  |" + (i < items.size() ? items.get(i).getRepresentation() : " ") + "|").toCharArray();
+                chars.add(item);
             }
             addToHeight += len;
-            chars.add(0, item);
         }
 
         while ((line = scanner.readLine()) != null) {
@@ -68,7 +68,7 @@ class MigrosQueue extends MultiTile {
         }
 
         this.height = 4 + addToHeight;
-        this.width  = 5;
+        this.width  = 6;
 
         return (char[][])(chars.toArray());
     }
