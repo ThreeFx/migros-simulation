@@ -2,7 +2,7 @@ package LLinkedList;
 
 import java.util.*;
 
-class Node<T> implements Iterable<T>, Iterator<T> {
+public class Node<T> {
     T item;
     Node<T> next;
     Node<T> prev;
@@ -20,23 +20,6 @@ class Node<T> implements Iterable<T>, Iterator<T> {
     public T getItem() {
         return this.item;
     }
-
-    public Node<T> getPrev() {
-        return this.prev;
-    }
-
-    public void setPrev(Node<T> prev) {
-        this.prev = prev;
-    }
-
-    public Node<T> getNext() {
-        return this.next;
-    }
-
-    public void setNext(Node<T> next) {
-        this.next = next;
-    }
-
 
     public Node<T> prepend(Node<T> node) {
         this.prev = prev;
@@ -66,19 +49,11 @@ class Node<T> implements Iterable<T>, Iterator<T> {
         return this;
     }
 
-    public Iterator<T> iterator() {
-        return this;
-    }
-    
-    public boolean hasNext() {
-        return this.next != null;
+    public boolean hasNext(){
+        return next != null;
     }
 
-    public T next() {
-        return this.getItem();
-    }
-
-    public void remove() {
-        throw new RuntimeException("Not implemented");
+    public Node<T> getNext(){
+        return next;
     }
 }

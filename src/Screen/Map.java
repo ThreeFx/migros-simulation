@@ -1,12 +1,6 @@
 package Screen;
 
-import Tiles.Checkout;
-import Tiles.Tile;
-import Tiles.IPrintable;
-import Tiles.ItemSpawner;
-import Tiles.MigrosQueue;
-import Tiles.Person;
-//import Tiles.TileType;
+import Tiles.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,70 +21,85 @@ public class Map {
     private static int height;
     private static int width;
 
-    private static TreeSet<Character> itemList;
+    public static ArrayList<MigrosQueue> queues;
+    public static ArrayList<ItemSpawner> items;
+    public static ArrayList<Person> customers;
 
     /**
      * Initializes the map to a given width and height. The population of the map will be optimized later.
-     *
-     * @param width
-     * @param height
      */
     public static void initializeMap(String location) {
-        Checkout mt = new Checkout();
-        char[][] mapperoni = new char[1][1];
+        Checkout checkout = new Checkout();
+        queues = new ArrayList<>();
+        items = new ArrayList<>();
+        customers = new ArrayList<>();
+
+        char[][] mapperoni;
         try {
-            mapperoni = Checkout.getAsciiArt(location);
+            mapperoni = checkout.getAsciiArt(location);
+
+            int maxWidth = 0;
+
+            // map can be uneven -> get max dimensions
+            for(char[] row:mapperoni) {
+                maxWidth = Math.max(maxWidth, row.length);
+            }
+
             Map.height = mapperoni.length;
-            Map.width = mapperoni[0].length;
+            Map.width = maxWidth;
 
             System.out.println(width + " " + height);
-        asciiMap = new IPrintable[height][width];
+            asciiMap = new IPrintable[height][width];
+            nextFrameMap = new IPrintable[height][width];
 
-        itemList = new TreeSet<Character>();
-        itemList.add('◷');
-        itemList.add('◸');
-        itemList.add('◐');
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    if (j == 0 || i == 0 || j == width - 1 || i == height - 1) {
+                        asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, true, Color.BLUE, Color.NOBACKGROUND);
+                    } else if(j<mapperoni[i].length){
+                        char cChar = mapperoni[i][j];
 
-
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (j == 0 || i == 0 || j == width - 1 || i == height - 1) {
-
-                    asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, true, Color.BLUE, Color.NOBACKGROUND);
-                } else {
-                    char cChar = mapperoni[i][j];
-
-                    if (cChar == '◷') {
-                        asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.GREEN, Color.NOBACKGROUND);
-                    } else if (cChar == '◸') {
-                        asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.RED, Color.NOBACKGROUND);
-                    } else if (cChar == '◐') {
-                        asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.YELLOW, Color.NOBACKGROUND);
-                    } else if (cChar == 'S') {
-                        //throw new RuntimeException("huzzah");
-                        asciiMap[i][j] = new MigrosQueue(0.7);
-                    } else if (cChar != ' ') {
-                        asciiMap[i][j] = new Tile(cChar, j, i, true, Color.BLUE, Color.NOBACKGROUND);
+                        if (cChar == '◷') {
+                            ItemSpawner item = new ItemSpawner(cChar, j, i, true, Color.GREEN, Color.NOBACKGROUND);
+                            asciiMap[i][j] = item;
+                            items.add(item);
+                        } else if (cChar == '◸') {
+                            ItemSpawner item = new ItemSpawner(cChar, j, i, true, Color.RED, Color.NOBACKGROUND);
+                            asciiMap[i][j] = item;
+                            items.add(item);
+                        } else if (cChar == '◐') {
+                            ItemSpawner item = new ItemSpawner(cChar, j, i, true, Color.YELLOW, Color.NOBACKGROUND);
+                            asciiMap[i][j] = item;
+                            items.add(item);
+                        } else if (cChar == 'S') {
+                            MigrosQueue queue = new MigrosQueue(0.7, j, i);
+                            if(Math.random()*100>50){
+                                queue.addPerson(new Person('#', j, i, false, Color.YELLOW, Color.NOBACKGROUND));
+                            }
+                            if(Math.random()*100>50) {
+                                queue.addPerson(new Person('%', j, i, false, Color.YELLOW, Color.NOBACKGROUND));
+                            }
+                            if(Math.random()*100>50) {
+                                queue.addPerson(new Person('&', j, i, false, Color.YELLOW, Color.NOBACKGROUND));
+                            }
+                            asciiMap[i][j] = queue;
+                            queues.add(queue);
+                        }  else if (cChar != ' ') {
+                            asciiMap[i][j] = new Tile(cChar, j, i, true, Color.BLUE, Color.NOBACKGROUND);
+                        }
                     }
-                    //int rand = new Random().nextInt(1000);
-                    //if (rand > 995)
-                    //    new Checkout(j, 1);
                 }
             }
-        }
-        //System.out.println(asciiMap + " " + asciiMap.length + " " + asciiMap[0].length);
-        staticLayer = new IPrintable[asciiMap.length][asciiMap[0].length];
-        for(int i = 0; i < asciiMap.length; ++i) {
-            for(int j = 0; j < asciiMap[i].length; ++j) {
-                if(asciiMap[i][j] instanceof Person) staticLayer[i][j] = new Person((Person)asciiMap[i][j]);
-                else if(asciiMap[i][j] instanceof ItemSpawner) staticLayer[i][j] = new ItemSpawner((ItemSpawner)asciiMap[i][j]);
-                else if(asciiMap[i][j] instanceof Tile) staticLayer[i][j] = new Tile((Tile)asciiMap[i][j]);
-                else if(asciiMap[i][j] instanceof MigrosQueue) staticLayer[i][j] = new Tile('S', i, j);
+            staticLayer = new IPrintable[height][width];
+            for(int i = 0; i < asciiMap.length; ++i) {
+                for(int j = 0; j < asciiMap[i].length; ++j) {
+                    if(asciiMap[i][j] instanceof Person) staticLayer[i][j] = new Person((Person)asciiMap[i][j]);
+                    else if(asciiMap[i][j] instanceof ItemSpawner) staticLayer[i][j] = new ItemSpawner((ItemSpawner)asciiMap[i][j]);
+                    else if(asciiMap[i][j] instanceof Tile) staticLayer[i][j] = new Tile((Tile)asciiMap[i][j]);
+                }
             }
-        }
 
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -122,31 +131,25 @@ public class Map {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if(asciiMap[i][j] != null && asciiMap[i][j].isStatic() == false) {
-                    if (asciiMap[i][j] instanceof MigrosQueue) throw new RuntimeException("huzzah");
+                if(asciiMap[i][j] != null && asciiMap[i][j].isStatic() == false && !(asciiMap[i][j] instanceof Person)) {
+                    //if (asciiMap[i][j] instanceof MigrosQueue) throw new RuntimeException("huzzah");
                     toProcess.add(asciiMap[i][j]);
                 }
             }
         }
-        System.out.println(staticLayer);
         nextFrameMap = new IPrintable[staticLayer.length][staticLayer[0].length];
         for(int i = 0; i < staticLayer.length; ++i) {
             for(int j = 0; j < staticLayer[i].length; ++j) {
-                /*
-                if(asciiMap[i][j] == null) {
-                    nextFrameMap[i][j] = null;
-                    if(staticLayer[i][j] != null);
-                } nextFrameMap[i][j] = new Person((Person)asciiMap[i][j]);
-
-                else nextFrameMap[i][j] = asciiMap[i][j];
-                */
-                if(asciiMap[i][j] instanceof Person) {}//nextFrameMap[i][j] = asciiMap[i][j];
+                if(asciiMap[i][j] instanceof Person) {
+                }//nextFrameMap[i][j] = asciiMap[i][j];
                 else if(asciiMap[i][j] instanceof ItemSpawner) nextFrameMap[i][j] = new ItemSpawner((ItemSpawner)staticLayer[i][j]);
                 else if (asciiMap[i][j] instanceof Tile) {
-                    if(asciiMap[i][j].isStatic() && asciiMap[i][j].getPlaceholder() == 'Q' && (new Random()).nextInt(100)==42) {
-                        nextFrameMap[i][j] = new Person('@', i, j, false, Color.YELLOW, Color.NOBACKGROUND);
+                    if(asciiMap[i][j].isStatic() && asciiMap[i][j].getPlaceholder() == 'Q' && (new Random()).nextInt(500)==42) {
+                        Person p = new Person('@', i, j, false, Color.YELLOW, Color.NOBACKGROUND);
+                        nextFrameMap[i][j] = p;
+                        customers.add(p);
                     }
-                    else
+                    else if(staticLayer[i][j] != null)
                         nextFrameMap[i][j] = new Tile((Tile) staticLayer[i][j]);
                 }
                 else if(asciiMap[i][j] == null && staticLayer[i][j] != null) {
@@ -157,12 +160,22 @@ public class Map {
             }
         }
 
+        queues.forEach(MigrosQueue::update);
+
         // randomise the order in which the movable tiles should be processed
-        Collections.shuffle(toProcess);
+        Collections.shuffle(customers);
 
         // process all remaining tiles that are not static
-        for (int i = 0; i < toProcess.size(); i++) {
-            toProcess.get(i).update();
+        for (Person c:customers) {
+            if(Math.random()*1000<10 && !c.stopMovement){
+                queues.get(0).addPerson(c);
+            }else{
+                c.update();
+            }
+        }
+
+        for (IPrintable p:toProcess){
+            p.update();
         }
 
         asciiMap = nextFrameMap;

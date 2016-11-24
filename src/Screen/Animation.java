@@ -7,14 +7,14 @@ public class Animation extends Thread {
     @Override
     public void run(){
         while (true){
-            System.out.print("\033[H\033[2J");
-
             Map.getNextFrame();
+
+            System.out.print("\033[H\033[2J");
 
             Display.displayMap(Map.asciiMap);
 
             try {
-                sleep(50);
+                sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
