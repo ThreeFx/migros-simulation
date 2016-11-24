@@ -24,13 +24,13 @@ public class MultiTile {
             displayCharacters = new char[][]{{'⚠'}};
         }
 
-        tiles = new ArrayList<>();
+        tiles = new ArrayList<ArrayList<Tile>>();
         // find the dimensions of this construct
         height = displayCharacters.length;
 
         // initializes the tiles array with tiles made of the characters passed to the constructor
         for(int i=0;i<displayCharacters.length;i++){
-            tiles.add(new ArrayList<>());
+            tiles.add(new ArrayList<Tile>());
             width = Math.max(displayCharacters[i].length, width);
 
             for(int j=0;j<displayCharacters[i].length;j++){
@@ -66,7 +66,7 @@ public class MultiTile {
         }
 
 
-        ArrayList<char[]> characters = new ArrayList<>();
+        ArrayList<char[]> characters = new ArrayList<char[]>();
         String line = null;
 
         // copy each character to the array
