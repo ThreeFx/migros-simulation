@@ -13,7 +13,6 @@ public class MultiTile {
 
     protected int width;
     protected int height;
-
     public MultiTile(String filePath, int x, int y){
         char[][] displayCharacters = null;
 
@@ -76,8 +75,12 @@ public class MultiTile {
             characters.add(charLine);
         }
 
-        char[][] output = characters.toArray(new char[characters.size()][characters.get(0).length]);
-
+        char[][] output = new char[characters.size()][characters.get(0).length];
+        for(int i = 0; i < characters.size(); ++i) {
+            for(int j = 0; j < characters.get(i).length; ++j) {
+                output[i][j] = characters.get(i)[j];
+            }
+        }
         return output;
     }
 
