@@ -1,6 +1,5 @@
 package LLinkedList;
 
-
 public interface SStack<T> {
     boolean isEmpty();
     T pop();

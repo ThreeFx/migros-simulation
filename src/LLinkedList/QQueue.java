@@ -1,4 +1,7 @@
 package LLinkedList;
+
+import java.lang.*;
+
 public interface QQueue<T> {
     boolean isEmpty();
     T dequeue();

@@ -52,9 +52,6 @@ public class Person extends Tile {
         int x;
         int y;
 
-
-
-
         x = new Random().nextInt(3) - 1;
         y = new Random().nextInt(3) - 1;
 

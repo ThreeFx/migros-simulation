@@ -147,7 +147,6 @@ public class Map {
             }
         }
 
-
         // randomise the order in which the movable tiles should be processed
         Collections.shuffle(toProcess);
 
