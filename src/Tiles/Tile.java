@@ -47,6 +47,11 @@ public class Tile extends IPrintable {
         printTile();
     }
 
+    public void update() {
+        System.out.println("tile update");
+        getNextFrame();
+    }
+
     public boolean isStatic() {
         return isStatic;
     }
@@ -61,8 +66,7 @@ public class Tile extends IPrintable {
      *
 	 * This function must be overridden. Right now the movement is random and mainly for debugging
      */
-    public void update(){
-        System.out.println("tile update");
+    public void getNextFrame(){
 		int newX = positionX, newY = positionY;
        	int x;
        	int y;

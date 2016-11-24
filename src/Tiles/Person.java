@@ -48,7 +48,6 @@ public class Person extends Tile {
 
     @Override
     public void update(){
-        System.out.println("person update");
         int newX = positionX, newY = positionY;
         int x;
         int y;

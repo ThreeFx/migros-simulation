@@ -104,7 +104,7 @@ public class Map {
         }
     }
 
-    public static void populateTile(IPrintable tile, IPrintable[][] map, int x, int y) {
+    public static void populateTile(Tile tile, IPrintable[][] map, int x, int y) {
         if (tile.getPlaceholder() == ' ') return;
         if (x < 0 || x >= width || y < 0 || y >= height) return;
 
@@ -154,7 +154,6 @@ public class Map {
         // process all remaining tiles that are not static
         //if (toProcess.size() > 0) throw new RuntimeException("huzzah");
         for (int i = 0; i < toProcess.size(); i++) {
-            System.out.println("update");
             toProcess.get(i).update();
         }
 
