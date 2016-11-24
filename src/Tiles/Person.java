@@ -47,7 +47,7 @@ public class Person extends Tile {
     }
 
     @Override
-    public void update(){
+    public void getNextFrame(){
         int newX = positionX, newY = positionY;
         int x;
         int y;
