@@ -111,9 +111,7 @@ public class Map {
     }
 
     public static void getNextFrame() {
-        nextFrameMap = new Tile[height][width];
-
-        ArrayList<Tile> toProcess = new ArrayList<>();
+        ArrayList<Tile> toProcess = new ArrayList<Tile>();
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -124,19 +122,23 @@ public class Map {
         nextFrameMap = new Tile[staticLayer.length][staticLayer[0].length];
         for(int i = 0; i < staticLayer.length; ++i) {
             for(int j = 0; j < staticLayer[i].length; ++j) {
-                if(asciiMap[i][j] instanceof Person) nextFrameMap[i][j] = new Person((Person)staticLayer[i][j]);
+                /*
+                if(asciiMap[i][j] == null) {
+                    nextFrameMap[i][j] = null;
+                    if(staticLayer[i][j] != null);
+                } nextFrameMap[i][j] = new Person((Person)asciiMap[i][j]);
+
+                else nextFrameMap[i][j] = asciiMap[i][j];
+                */
+                if(asciiMap[i][j] instanceof Person) {}//nextFrameMap[i][j] = asciiMap[i][j];
                 else if(asciiMap[i][j] instanceof ItemSpawner) nextFrameMap[i][j] = new ItemSpawner((ItemSpawner)staticLayer[i][j]);
-                else if (asciiMap[i][j] instanceof Tile) nextFrameMap[i][j] = new Tile((Tile)staticLayer[i][j]);
-            }
-        }
-
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                //if(asciiMap[i][j] != null && asciiMap[i][j].isStatic() && asciiMap[i][j].getDisplayCharacter() == 'Q') {
-                //    Random r = new Random();
-                //    if(r.nextInt(100) == 42) asciiMap[i][j] = new Person('@', i, j, true, Color.YELLOW, Color.NOBACKGROUND);
-                //}
+                else if (asciiMap[i][j] instanceof Tile) {
+                    if(asciiMap[i][j].isStatic() && asciiMap[i][j].getDisplayCharacter() == 'Q' && (new Random()).nextInt(100)==42) {
+                        nextFrameMap[i][j] = new Person('@', i, j, false, Color.YELLOW, Color.NOBACKGROUND);
+                    }
+                    else
+                        nextFrameMap[i][j] = new Tile((Tile) staticLayer[i][j]);
+                }
             }
         }
 
