@@ -4,6 +4,7 @@ import Tiles.Checkout;
 import Tiles.Tile;
 import Tiles.IPrintable;
 import Tiles.ItemSpawner;
+import Tiles.MigrosQueue;
 import Tiles.Person;
 //import Tiles.TileType;
 
@@ -66,6 +67,9 @@ public class Map {
                         asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.RED, Color.NOBACKGROUND);
                     } else if (cChar == '◐') {
                         asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.YELLOW, Color.NOBACKGROUND);
+                    } else if (cChar == 'S') {
+                        //throw new RuntimeException("huzzah");
+                        asciiMap[i][j] = new MigrosQueue(0.7);
                     } else if (cChar != ' ') {
                         asciiMap[i][j] = new Tile(cChar, j, i, true, Color.BLUE, Color.NOBACKGROUND);
                     }
@@ -75,12 +79,14 @@ public class Map {
                 }
             }
         }
+        //System.out.println(asciiMap + " " + asciiMap.length + " " + asciiMap[0].length);
         staticLayer = new IPrintable[asciiMap.length][asciiMap[0].length];
         for(int i = 0; i < asciiMap.length; ++i) {
             for(int j = 0; j < asciiMap[i].length; ++j) {
                 if(asciiMap[i][j] instanceof Person) staticLayer[i][j] = new Person((Person)asciiMap[i][j]);
                 else if(asciiMap[i][j] instanceof ItemSpawner) staticLayer[i][j] = new ItemSpawner((ItemSpawner)asciiMap[i][j]);
                 else if(asciiMap[i][j] instanceof Tile) staticLayer[i][j] = new Tile((Tile)asciiMap[i][j]);
+                else if(asciiMap[i][j] instanceof MigrosQueue) staticLayer[i][j] = new Tile('S', i, j);
             }
         }
 
@@ -116,10 +122,13 @@ public class Map {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if(asciiMap[i][j] != null && asciiMap[i][j].isStatic() == false)
+                if(asciiMap[i][j] != null && asciiMap[i][j].isStatic() == false) {
+                    if (asciiMap[i][j] instanceof MigrosQueue) throw new RuntimeException("huzzah");
                     toProcess.add(asciiMap[i][j]);
+                }
             }
         }
+        System.out.println(staticLayer);
         nextFrameMap = new IPrintable[staticLayer.length][staticLayer[0].length];
         for(int i = 0; i < staticLayer.length; ++i) {
             for(int j = 0; j < staticLayer[i].length; ++j) {
