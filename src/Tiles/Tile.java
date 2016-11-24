@@ -4,7 +4,7 @@ import Screen.Color;
 import Screen.Display;
 import Screen.Map;
 
-public class Tile implements IPrintable {
+public class Tile extends IPrintable {
 
     // the string that will be printed out to the map
     protected char displayChar;
@@ -44,11 +44,12 @@ public class Tile implements IPrintable {
 
     // IPrintable implementation
     public void print() {
-        this.printTile();
+        printTile();
     }
 
     public void update() {
-        this.getNextFrame();
+        System.out.println("tile update");
+        getNextFrame();
     }
 
     public boolean isStatic() {

@@ -152,6 +152,7 @@ public class Map {
         Collections.shuffle(toProcess);
 
         // process all remaining tiles that are not static
+        //if (toProcess.size() > 0) throw new RuntimeException("huzzah");
         for (int i = 0; i < toProcess.size(); i++) {
             toProcess.get(i).update();
         }
