@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Map.initializeMap(100, 30);
+        Map.initializeMap("Art/smallmap.ASCIIART");
 
         Animation animation = new Animation();
 

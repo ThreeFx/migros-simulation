@@ -1,4 +1,4 @@
-package LLinkedList;
+package LinkedList;
 
 public interface SStack<T> {
     boolean isEmpty();

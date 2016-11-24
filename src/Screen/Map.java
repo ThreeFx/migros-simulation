@@ -2,11 +2,13 @@ package Screen;
 
 import Tiles.Checkout;
 import Tiles.Tile;
+import Tiles.ItemSpawner;
 //import Tiles.TileType;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.TreeSet;
 
 public class Map {
 
@@ -22,24 +24,50 @@ public class Map {
     private static int height;
     private static int width;
 
+    private static TreeSet<Character> itemList;
+
     /**
      * Initializes the map to a given width and height. The population of the map will be optimized later.
      *
      * @param width
      * @param height
      */
-    public static void initializeMap(int width, int height) {
-        Map.width = width;
-        Map.height = height;
+    public static void initializeMap(String location) {
+        Checkout mt = new Checkout();
+        char[][] mapperoni = new char[1][1];
+        try {
+            mapperoni = Checkout.getAsciiArt(location);
+            Map.height = mapperoni.length;
+            Map.width = mapperoni[0].length;
+
+            System.out.println(width + " " + height);
         asciiMap = new Tile[height][width];
+
+        itemList = new TreeSet<Character>();
+        itemList.add('◷');
+        itemList.add('◸');
+        itemList.add('◐');
+
 
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (j == 0 || i == 0 || j == width - 1 || i == height - 1) {
+
                     asciiMap[i][j] = new Tile(Map.getSideChar(i, j), j, i, true, Color.BLUE, Color.NOBACKGROUND);
                 } else {
-                    int rand = new Random().nextInt(1000);
+                    char cChar = mapperoni[i][j];
+
+                    if(cChar == '◷') {
+                        asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.GREEN, Color.NOBACKGROUND);
+                    } else if(cChar == '◸') {
+                        asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.RED, Color.NOBACKGROUND);
+                    } else if(cChar == '◐') {
+                        asciiMap[i][j] = new ItemSpawner(cChar, j, i, true, Color.YELLOW, Color.NOBACKGROUND);
+                    } else if (cChar != ' '){
+                        asciiMap[i][j] = new Tile(cChar, j, i, true, Color.BLUE, Color.NOBACKGROUND);
+                    }
+                    //int rand = new Random().nextInt(1000);
                     //if (rand > 995)
                     //    new Checkout(j, 1);
                 }
@@ -49,7 +77,9 @@ public class Map {
         for (int i = 0; i < 6; i++) {
             asciiMap[height / (i + 2)][width / (i + 2)] = new Tile('@', width / (i + 2), height / (i + 2), false, Color.YELLOW, Color.NOBACKGROUND);
         }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

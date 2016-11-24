@@ -4,10 +4,6 @@ import Screen.Color;
 import Screen.Display;
 import Screen.Map;
 
-import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
-
 public class Tile {
 
     // the string that will be printed out to the map
@@ -25,18 +21,12 @@ public class Tile {
     // whether the tile moves or not
     private boolean isStatic = false;
 
-    public Tile(char displayChar, int positionX, int positionY){
-        this(displayChar, positionX, positionY, true, Color.BLUE, Color.NOBACKGROUND);
-    }
+    public Tile() {
 
-    public Tile(char displayChar, int positionX, int positionY, boolean isStatic){
-        this(displayChar, positionX, positionY, isStatic, Color.BLUE, Color.NOBACKGROUND);
     }
-
-    public Tile(char displayChar, int positionX, int positionY, Color stringColor, Color backgroundColor){
-        this(displayChar, positionX, positionY, true, stringColor, backgroundColor);
+    public Tile(char displayChar, int positionX, int positionY) {
+        this(displayChar, positionX, positionY,true,Color.NOBACKGROUND, Color.NOBACKGROUND);
     }
-
     public Tile(char displayChar, int positionX, int positionY, boolean isStatic, Color stringColor, Color backgroundColor){
         this.backgroundColor = backgroundColor;
         this.displayChar = displayChar;
@@ -95,4 +85,9 @@ public class Tile {
 
     final public char getDisplayCharacter() { return displayChar; }
 
+    final public boolean setPosition(int X, int Y) {
+        this.positionX = X;
+        this.positionY = Y;
+        return true;
+    }
 }
