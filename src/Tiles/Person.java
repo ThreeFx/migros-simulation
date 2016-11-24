@@ -30,9 +30,14 @@ public class Person extends Tile {
 
      */
 
-
+    public Person(Person a) {
+        super(a.displayChar, a.positionX, a.positionY, a.isStatic, a.stringColor, a.backgroundColor);
+        this.holdingItems = a.holdingItems;
+        this.shoppingList = a.shoppingList;
+    }
     public Person(char displayChar, int positionX, int positionY, boolean isStatic, Color stringColor, Color backgroundColor) {
         super(displayChar, positionX, positionY, isStatic, stringColor, backgroundColor);
+
         // Generate int positionX, int positionY;
         //Map.asciiMap();
         //for(int )
