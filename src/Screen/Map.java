@@ -24,8 +24,8 @@ public class Map {
 
     public static IPrintable[][] nextFrameMap;
 
-    private static int height;
-    private static int width;
+    public static int height;
+    public static int width;
 
     private static TreeSet<Character> itemList;
 

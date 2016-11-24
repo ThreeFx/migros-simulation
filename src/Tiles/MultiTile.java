@@ -26,7 +26,7 @@ public class MultiTile implements IPrintable {
         // Do nothing by default
         // Draw same map again on next tile.
         for (int i = y; i < y + height; i++) {
-            for (int j = x; j < x + width; j++) {
+            for (int j = x; j < x + width - 1; j++) {
                 Map.populateTile(tiles[i - y][j - x], Map.nextFrameMap, i, j);
             }
         }
