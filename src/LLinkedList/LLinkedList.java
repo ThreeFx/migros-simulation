@@ -1,6 +1,8 @@
 package LLinkedList;
 
-class LLinkedList<T> implements QQueue<T> {
+import java.util.*;
+
+public class LLinkedList<T> implements QQueue<T>, SStack<T>, Iterable<T> {
     Node<T> head;
     Node<T> tail;
     int size;
@@ -15,6 +17,10 @@ class LLinkedList<T> implements QQueue<T> {
         this.head = new Node<T>(item);
         this.tail = head;
         this.size = 1;
+    }
+
+    public int getSize() {
+        return this.size;
     }
 
     public LLinkedList<T> append(T item) {
@@ -95,5 +101,22 @@ class LLinkedList<T> implements QQueue<T> {
         T result = head.getItem();
         this.deleteFirst();
         return result;
+    }
+    
+    public SStack<T> push(T item) {
+        return this.prepend(item);
+    }
+
+    public T peek() {
+        return this.head.getItem();
+    }
+
+    // Dequeue and pop work from the same end.
+    public T pop() {
+        return this.dequeue();
+    }
+
+    public Iterator<T> iterator() {
+        return this.head.iterator();
     }
 }

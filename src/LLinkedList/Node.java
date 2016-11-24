@@ -1,6 +1,8 @@
 package LLinkedList;
 
-class Node<T> {
+import java.util.*;
+
+class Node<T> implements Iterable<T>, Iterator<T> {
     T item;
     Node<T> next;
     Node<T> prev;
@@ -62,5 +64,21 @@ class Node<T> {
         n.next = node;
         node.prev = n;
         return this;
+    }
+
+    public Iterator<T> iterator() {
+        return this;
+    }
+    
+    public boolean hasNext() {
+        return this.next != null;
+    }
+
+    public T next() {
+        return this.getItem();
+    }
+
+    public void remove() {
+        throw new RuntimeException("Not implemented");
     }
 }

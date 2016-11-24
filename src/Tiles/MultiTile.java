@@ -6,16 +6,19 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class MultiTile {
-
     protected ArrayList<ArrayList<Tile>> tiles;
 
     // dimensions of this tiles-construct
-
     protected int width;
     protected int height;
 
+    protected int x;
+    protected int y;
+
     public MultiTile(String filePath, int x, int y){
         char[][] displayCharacters = null;
+        this.x = x;
+        this.y = y;
 
         try {
             displayCharacters = getAsciiArt(filePath);
@@ -48,7 +51,7 @@ public class MultiTile {
      * reads out ASCII art from a file and stores each line of characters in an array, resulting in an 2-dimensional return array
      * @param String path of the file containing the artwork
      */
-    protected char[][] getAsciiArt(String filePath) throws IOException {
+    public char[][] getAsciiArt(String filePath) throws IOException {
         FileInputStream fstream = null;
         BufferedReader scanner = null;
 
@@ -84,7 +87,7 @@ public class MultiTile {
     /**
      * @return true if the whole construct can be printed out at position x and y and false otherwise
      */
-    final public boolean canPrintAt(int x, int y, Tile[][] map){
+    final public boolean canPrintAt(Tile[][] map){
         // check if a9ny of the required spaces are already in use and return false if so
         for(int i=0;i<tiles.size();i++){
             for(int j=0;j<tiles.get(i).size();j++){
@@ -103,7 +106,7 @@ public class MultiTile {
      * @param y vertical coordinate at which the construct should be inserted
      * @param map a map in which the tiles should be saved
      */
-    final public void insertAt(int x, int y, Tile[][] map){
+    final public void insertAt(Tile[][] map){
         for(int i=0;i<tiles.size();i++){
             for(int j=0;j<tiles.get(i).size();j++){
                 Map.populateTile(tiles.get(i).get(j), map, x+j, y+i);
