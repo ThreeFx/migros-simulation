@@ -4,6 +4,7 @@ import Screen.Color;
 import Screen.Display;
 import Screen.Map;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by kdkdk on 24.11.16.
@@ -53,25 +54,16 @@ public class Person extends Tile {
 
 
 
-		/*switch(type) {
-			case ITEM:
 
-			break;
-			case COUNTER:
-			break;
-			case WALL:
-			break;
-			case PERSON:
-            x = new Random().nextInt(3) - 1;
-            y = new Random().nextInt(3) - 1;
+        x = new Random().nextInt(3) - 1;
+        y = new Random().nextInt(3) - 1;
 
             if (Map.canPopulate(positionX + x, positionY + y, Map.nextFrameMap)) {
                	newX = newX + x;
                	newY = newY + y;
-           	}
+            }
 
-			default:
-		*/
+
 
         Map.populateTile(this, Map.nextFrameMap, newX, newY);
         this.positionX = newX;
