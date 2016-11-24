@@ -3,11 +3,8 @@ package Tiles;
 import Screen.Color;
 import Screen.Display;
 import Screen.Map;
-import Tiles.TileType;
 
-import java.util.Random;
-
-public class Tile {
+public class Tile implements IPrintable {
 
     // the string that will be printed out to the map
     protected char displayChar;
@@ -15,37 +12,51 @@ public class Tile {
     protected int positionX;
     protected int positionY;
 
-    private Color backgroundColor;
-    private Color stringColor;
+    protected Color backgroundColor;
+    protected Color stringColor;
 
     // space between the individual tiles
-    private int tilePadding = 0;
+    protected int tilePadding = 0;
 
     // whether the tile moves or not
-    private boolean isStatic = false;
+    protected boolean isStatic = false;
 
-	private TileType type;
+    public Tile() {
 
-    public Tile(char displayChar, int positionX, int positionY){
-        this(displayChar, positionX, positionY, true, Color.BLUE, Color.NOBACKGROUND, TileType.EMPTY);
+    }
+    public Tile(Tile a) {
+        this(a.displayChar, a.positionX, a.positionY, a.isStatic, a.stringColor, a.backgroundColor);
     }
 
-    public Tile(char displayChar, int positionX, int positionY, boolean isStatic){
-        this(displayChar, positionX, positionY, isStatic, Color.BLUE, Color.NOBACKGROUND, TileType.EMPTY);
+    public Tile(char displayChar, int positionX, int positionY) {
+        this(displayChar, positionX, positionY,true,Color.NOBACKGROUND, Color.NOBACKGROUND);
     }
-
-    public Tile(char displayChar, int positionX, int positionY, Color stringColor, Color backgroundColor){
-        this(displayChar, positionX, positionY, true, stringColor, backgroundColor, TileType.EMPTY);
-    }
-
-    public Tile(char displayChar, int positionX, int positionY, boolean isStatic, Color stringColor, Color backgroundColor, TileType type){
+    public Tile(char displayChar, int positionX, int positionY, boolean isStatic, Color stringColor, Color backgroundColor){
         this.backgroundColor = backgroundColor;
         this.displayChar = displayChar;
         this.stringColor = stringColor;
         this.positionX = positionX;
         this.positionY = positionY;
         this.isStatic = isStatic;
-		this.type = type;	
+	    //this.type = type;
+
+    }
+
+    // IPrintable implementation
+    public void print() {
+        this.printTile();
+    }
+
+    public void update() {
+        this.getNextFrame();
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public char getPlaceholder() {
+        return this.displayChar;
     }
 
     /**
@@ -60,7 +71,7 @@ public class Tile {
        	int y;
 
 
-		switch(type) {
+		/*switch(type) {
 			case ITEM:
 				
 			break;
@@ -75,27 +86,28 @@ public class Tile {
             if (Map.canPopulate(positionX + x, positionY + y, Map.nextFrameMap)) {
                	newX = newX + x;
                	newY = newY + y;
-               	movementPossible = true;
            	}
         	
 			default:        	
-				
+		*/
 
-       		Map.populateTile(this, Map.nextFrameMap, newX, newY);
-			this.positionX = newX;
-        	this.positionY = newY;
-        	
-
-		}
+        Map.populateTile(this, Map.nextFrameMap, newX, newY);
+        this.positionX = newX;
+        this.positionY = newY;
     }
+
 
     public void printTile(){
         String formatString = tilePadding>0?"%-"+tilePadding+"s":"%s";
         System.out.print(String.format(formatString, Display.makeColor(""+displayChar, stringColor, backgroundColor) + ""));
     }
 
-    final public boolean isStatic() { return isStatic; }
-
     final public char getDisplayCharacter() { return displayChar; }
 
+    final public boolean setPosition(int X, int Y) {
+        this.positionX = X;
+        this.positionY = Y;
+        return true;
+    }
 }
+
