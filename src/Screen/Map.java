@@ -139,6 +139,11 @@ public class Map {
                     else
                         nextFrameMap[i][j] = new Tile((Tile) staticLayer[i][j]);
                 }
+                else if(asciiMap[i][j] == null && staticLayer[i][j] != null) {
+                    if(staticLayer[i][j] instanceof Person) nextFrameMap[i][j] = new Person((Person)staticLayer[i][j]);
+                    else if(staticLayer[i][j] instanceof ItemSpawner) nextFrameMap[i][j] = new ItemSpawner((ItemSpawner)staticLayer[i][j]);
+                    else if(staticLayer[i][j] instanceof Tile) nextFrameMap[i][j] = new Tile((Tile)staticLayer[i][j]);
+                }
             }
         }
 
