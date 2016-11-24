@@ -2,7 +2,6 @@ package Screen;
 
 import Tiles.IPrintable;
 import Tiles.Tile;
-import Screen.Map;
 
 public class Display {
 
@@ -13,13 +12,8 @@ public class Display {
         for(int i = 0; i < numberOfBackspaces; ++i) System.out.print('\b');
         for(int i = 0; i < asciiMap.length; ++i) {
             for(int j = 0; j < asciiMap[i].length; ++j) {
-                if(asciiMap[i][j] != null) {
-                    if (Map.staticLayer[i][j] != null && Map.staticLayer[i][j].getPlaceholder() != 'X') {
-                        asciiMap[i][j].print();
-                    }
-                    //else if(Map.staticLayer[i][j] != null)
-                    //    Map.staticLayer[i][j].printTile();
-                }
+                if(asciiMap[i][j] != null)
+                    asciiMap[i][j].print();
                 else
                     new Tile(' ', j, i).print();
             }
