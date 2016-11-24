@@ -2,11 +2,11 @@ package Screen;
 
 public class Animation extends Thread {
 
-    public Animation(){}
+    public Animation() { }
 
     @Override
-    public void run(){
-        while (true){
+    public void run() {
+        while (true) {
             System.out.print("\033[H\033[2J");
 
             Map.getNextFrame();
