@@ -1,8 +1,10 @@
 package LLinkedList;
 
+import Tiles.Person;
+
 import java.util.*;
 
-public class LLinkedList<T> implements QQueue<T>, SStack<T>, Iterable<T> {
+public class LLinkedList<T> implements QQueue<T>, SStack<T>, Iterable<Node<T>> {
     Node<T> head;
     Node<T> tail;
     int size;
@@ -25,8 +27,13 @@ public class LLinkedList<T> implements QQueue<T>, SStack<T>, Iterable<T> {
 
     public LLinkedList<T> append(T item) {
         Node<T> newTail = new Node<T>(item);
-        this.tail.append(newTail);
-        this.tail = newTail;
+        if(this.tail != null) {
+            this.tail.append(newTail);
+            this.tail = newTail;
+        }else {
+            this.head = newTail;
+            this.tail = newTail;
+        }
         size++;
         return this;
     }
@@ -108,7 +115,7 @@ public class LLinkedList<T> implements QQueue<T>, SStack<T>, Iterable<T> {
     }
 
     public T peek() {
-        return this.head.getItem();
+        return (this.head != null)?this.head.getItem():null;
     }
 
     // Dequeue and pop work from the same end.
@@ -116,7 +123,32 @@ public class LLinkedList<T> implements QQueue<T>, SStack<T>, Iterable<T> {
         return this.dequeue();
     }
 
-    public Iterator<T> iterator() {
-        return this.head.iterator();
+    public Node<T> getFirst() { return head; }
+
+    // add iterator so we can traverse the list more easily
+    @Override
+    public Iterator<Node<T>> iterator() {
+        Iterator<Node<T>> iterator = new Iterator<Node<T>>() {
+            private Node<T> currentNode = new Node<T>(null).append(head);
+
+            @Override
+            public boolean hasNext() {
+                return currentNode.next != null;
+            }
+
+            @Override
+            public Node<T> next() {
+                currentNode = currentNode.next;
+                return currentNode;
+            }
+
+            @Override
+            public void remove() {
+                System.out.println("Can't remove for now...");
+            }
+
+        };
+
+        return iterator;
     }
 }

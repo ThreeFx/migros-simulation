@@ -33,6 +33,8 @@ public class Person extends Tile {
 
      */
 
+    public boolean stopMovement = false;
+
     public Person(Person a) {
         super(a.displayChar, a.positionX, a.positionY, a.isStatic, a.stringColor, a.backgroundColor);
         this.holdingItems = a.holdingItems;
@@ -117,6 +119,10 @@ public class Person extends Tile {
 
     @Override
     public void getNextFrame(){
+        if(stopMovement){
+            return;
+        }
+
         int newX = positionX, newY = positionY;
         int x;
         int y;
